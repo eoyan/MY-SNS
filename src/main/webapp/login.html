@@ -1,0 +1,94 @@
+<html>
+<head>
+<meta charset = "utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+<meta charset="utf-8" />
+<link rel="stylesheet" href="css/core.css">
+<title>MySNS</title>
+<style>
+    .desc {
+        float: left;
+        width: 100%;
+        color: rgb(255, 255, 255);
+        font-size: 0.9em;
+    }
+    
+    .btn-link {
+	    display: inline-block;
+	    text-align: center;
+	    box-sizing: border-box;
+	    width: 100%;
+	    background-color: transparent; /* 버튼 배경색 */
+	    color: #9fff00; /* 글자 색상 */
+	    line-height: 46px;
+	    padding: 1px 20px; /* 버튼 크기 */
+	    font-size: 16px; /* 글자 크기 */
+	    border-radius: 8px; /* 둥근 모서리 */
+	    text-decoration: none; /* 밑줄 제거 */
+	    margin-top: 10px; /* 버튼 간격 */
+	    cursor: pointer; /* 마우스 포인터 */
+	   	border: 1px solid #9fff00;
+	}
+
+
+</style>
+</head>
+
+<body>
+	
+<div class="page-hdr">NODE</div>
+<div class="page-body">
+    <div class="section pad-24 mtop-30">
+        <input id="id" type="email" placeholder="아이디 (이메일주소)" >
+        <input id="ps" type="password" class="mtop-10" placeholder="비밀번호" >
+        <input type="submit" class="mtop-20" value="로그인" onclick= "login()">
+    </div>
+    <div class="section pad-24 mtop-30">
+        <div class="desc mtop-20 mbot-20">
+            아이디가 없으세요?<br>
+            간단한 가입 절차를 통해 노드의 회원이 되실 수 있습니다.
+        </div>
+        <a href="signup.html">
+            <a href="signup.html" class="btn-link">회원 가입하기</a>
+        </a>
+    </div>
+    
+</div>
+  <div class="page-footer">Copyright: mysns.com, 202x</div>
+</body>
+</html>
+
+<script src = "js/jquery-3.5.1.min.js"></script>
+<script src = "js/core.js"></script>
+<script>
+
+
+	function login() {
+    // 아이디와 비밀번호 값 가져오기 
+    var id = $("#id").val().trim();
+    if (id == "") {
+        alert("아이디를 입력해 주세요.");
+        $("#id").focus();
+        return;
+    }
+
+    // 비밀번호 입력 확인
+    var ps = $("#ps").val().trim();
+    if (ps == "") {
+        alert("비밀번호를 입력해 주세요.");
+        $("#ps").focus();
+        return;
+    }
+
+    var url = "jsp/login.jsp?id=" + id + "&ps=" + ps;
+    AJAX.call(url, null, function(data) {
+        var code = data.trim();
+        if (code == "NE") {
+            alert("아이디가 존재하지 않습니다.");
+        } else if (code == "PE") {
+            alert("패스워드가 일치하지 않습니다.");
+        } else {
+            window.location.href = "jsp/main.jsp";
+        }
+    });
+}</script>
